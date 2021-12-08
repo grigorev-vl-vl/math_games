@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import FloatField
+
 
 class Problem(models.Model):
     problem_text = models.TextField()
@@ -9,6 +11,6 @@ class Problem(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    answer_number = models.FloatField(default=0)
+    answer_number: FloatField = models.FloatField(default=0)
     def __str__(self):
         return self.answer_number
