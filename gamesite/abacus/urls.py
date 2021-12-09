@@ -8,8 +8,10 @@ urlpatterns = [
     # ex: /abacus/6
     # path('')
     # TODO path to game
-    # ex: /problems/
+    # ex: abacus/problems/
     path('problems/', views.problems_list, name='problems_list'),
-    # ex: /problems/5
+    # ex: abacus/problems/5
     path('problems/<int:problem_id>/', views.problem_details, name='problem'),
+    # ex: abacust/contest/5
+    path('contest/<int:contest_id>/', views.context_problems, name='contest'),
 ]

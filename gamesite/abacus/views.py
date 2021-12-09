@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
-from .models import Problem
+from .models import Problem, Contest, Answer
 
 
 def index(request):
@@ -17,4 +18,13 @@ def problems_list(request):
 def problem_details(request, problem_id):
     template = loader.get_template('abacus/problem_text.html')
     context = {}
+    return HttpResponse(template.render(context, request))
+
+def context_problems(request, contest_id):
+    template = loader.get_template('abacus/contest_screen.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+    contest_problems_list = contest.problems.all
+    context = {
+        'contest_problems_list': contest_problems_list,
+    }
     return HttpResponse(template.render(context, request))
