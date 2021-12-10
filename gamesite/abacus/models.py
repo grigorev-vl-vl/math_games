@@ -12,15 +12,22 @@ class Problem(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    answer_number: FloatField = models.FloatField(default=0)
+    answer_value: FloatField = models.FloatField(default=0)
 
     def __str__(self):
-        return self.answer_number
+        return self.answer_value
 
 
 class Contest(models.Model):
-    problems = models.ManyToManyField(Problem)
+    problem = models.ManyToManyField(Problem, through='ProblemInclusion')
     headline = models.CharField(max_length=200)
 
     def __str__(self):
         return self.headline
+
+
+class ProblemInclusion(models.Model):
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+    theme = models.CharField(max_length=200)

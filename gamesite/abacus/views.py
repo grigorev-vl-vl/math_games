@@ -23,7 +23,7 @@ def problem_details(request, problem_id):
 def context_problems(request, contest_id):
     template = loader.get_template('abacus/contest_screen.html')
     contest = get_object_or_404(Contest, pk=contest_id)
-    contest_problems_list = contest.problems.all
+    contest_problems_list = contest.problem.all
     context = {
         'contest_problems_list': contest_problems_list,
     }
