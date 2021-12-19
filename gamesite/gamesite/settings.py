@@ -75,11 +75,16 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+with open('./keys/admin_password.txt') as f:
+    admin_password = f.read().strip()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',
+        'USER': 'django_db_admin',
+        'PASSWORD': admin_password,
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
