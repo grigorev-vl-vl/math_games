@@ -1,3 +1,8 @@
-# Hello, there
-
-It's just an exercise in Django for me to understand it. The real site will be as soon as possible
+# Hello, there!
+## Roadmap
+- [x] Make sandbox v0.1.0
+- [x] Prepare to deploy
+- [ ] Deploy
+- [ ] Make a simple game
+- [ ] Make a teacher's interface
+- [ ] New features coming soon...   
