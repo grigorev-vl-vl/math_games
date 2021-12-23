@@ -17,8 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -29,7 +27,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['127.0.0.1']
+
 
 
 # Application definition
@@ -80,6 +78,7 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 DB_USER_PASSWORD = os.environ.get('DB_USER_PASSWORD')
 DB_NAME = os.environ.get('DB_NAME')
 DB_USER = os.environ.get('DB_USER')
+DB_HOST = os.environ.get('DB_HOST')
 
 DATABASES = {
     'default': {
@@ -87,8 +86,8 @@ DATABASES = {
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_USER_PASSWORD,
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': DB_HOST,
+        'PORT': 5432,
     }
 }
 
