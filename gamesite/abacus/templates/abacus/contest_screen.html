@@ -15,7 +15,9 @@ MathJax = {
 </script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 {% csrf_token %}
+
 <head>
     <meta charset="UTF-8">
     <title>Contest</title>
@@ -31,6 +33,11 @@ An example of latex code: \(a \ne 5\)
 <ul>
     {% for problem in contest_problems_list %}
         <li>{{ problem.problem_text }}</li>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
     {% endfor %}
 </ul>
 
