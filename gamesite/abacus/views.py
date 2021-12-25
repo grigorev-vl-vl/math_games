@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import AnswerForm
 
-from .models import Problem, Contest, Answer, ProblemInclusion
+from .models import Problem, Contest, ProblemInclusion
 
 
 def index(request):
@@ -22,8 +22,11 @@ def problems_list(request):
 
 
 def problem_details(request, problem_id):
-    template = loader.get_template('abacus/problem_text.html')
-    context = {}
+    template = loader.get_template('abacus/problem_details.html')
+    problem = get_object_or_404(Problem, pk=problem_id)
+    context = {
+        'problem': problem,
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -32,44 +35,37 @@ def context_problems(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
     contest_problems_list = contest.problem.all
 
-
-    if request.method == 'POST':
-        # Create a filled form:
-        form = AnswerForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # check whether the answer is correct:
-            # TODO it's an exercise in 'through' something
-            # TODO dunno what to do with 'problem'. In the template we iterate through problems in contest_problems_list.
-            # TODO But here we just create 'form' for that problem, yet we don't know which problem is in question
-            right_answer = ProblemInclusion.objects.get(contest=contest, problem=Problem.objects.get(id=1)).score
-            if form.cleaned_data['your_answer'] == right_answer:
-                solved = True
-                print(form.cleaned_data['your_answer'])
-                #return HttpResponse("Solved!")
-    # If we see GET, then we show a blank form:
-    else:
-        form = AnswerForm()
-
     context = {
         'contest_problems_list': contest_problems_list,
-        'form': form,
     }
     return HttpResponse(template.render(context, request))
 
 
-def login_view(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return HttpResponse("Hello {}!".format(username))
+# TODO what's problem_id? Is it absolute id? Or the problem gets it's own id in contest
+def answering_problem(request, contest_id, problem_id):
+    template = loader.get_template('abacus/answering_problem.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+    problem = contest.problem.get(id=problem_id)
+    if request.method == 'POST':
+        # Create a filled form:
+        answer_form = AnswerForm(request.POST)
+        # check whether it's valid:
+        if answer_form.is_valid():
+            # check whether the answer is correct:
+            # TODO But here we just create 'form' for that problem_id, this is not it's number in contest
+            # TODO yet we don't know which problem is in question
+            if answer_form.cleaned_data['your_answer'] == problem.answer:
+                print(answer_form.cleaned_data['your_answer'])
+                return HttpResponse("Solved!")
+    # If we see GET, then we show a blank form:
     else:
-        return HttpResponse("Hello, anonymous")
+        answer_form = AnswerForm()
 
-
-
+    context = {
+        'answer_form': answer_form,
+        'problem': problem,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def simple_form(request):
@@ -81,7 +77,7 @@ def simple_form(request):
         if form.is_valid():
             return HttpResponse("The form is valid!")
 
-    # If we see GET, then we show a blanck form:
+    # If we see GET, then we show a blank form:
     else:
         form = AnswerForm()
 
