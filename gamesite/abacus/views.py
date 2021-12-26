@@ -82,3 +82,15 @@ def simple_form(request):
         form = AnswerForm()
 
     return render(request, 'abacus/simple_form.html', {'form': form})
+
+
+def nice_cat(request):
+    template = loader.get_template('abacus/not_found_page.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+def example_template(request):
+    template = loader.get_template('abacus/index.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+

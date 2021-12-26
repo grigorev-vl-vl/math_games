@@ -16,4 +16,10 @@ urlpatterns = [
     path('form', views.simple_form, name='simple_form'),
     # ex: abacus/contest/5/problem/6
     path('contest/<int:contest_id>/problem/<int:problem_id>', views.answering_problem, name='answering_problem'),
+    # ex: abacus/nicecat
+    path('nicecat/', views.nice_cat, name='nice_cat'),
+    # ex: abacus/example_test
+    path('example_test', views.students_screen, name='example_test'),
+    # f
+    path('starter_template', views.example_template, name='starter_template')
 ]
