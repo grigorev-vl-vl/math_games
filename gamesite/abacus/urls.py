@@ -21,5 +21,7 @@ urlpatterns = [
     # ex: abacus/example_test
     path('example_test', views.students_screen, name='example_test'),
     # f
-    path('starter_template', views.example_template, name='starter_template')
+    path('starter_template', views.example_template, name='starter_template'),
+    # f
+    path('abacus_main_page/contest/<int:contest_id>', views.abacus_main_page, name='abacus_main_page'),
 ]

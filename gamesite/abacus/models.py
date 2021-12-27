@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import FloatField
 
 
 class Problem(models.Model):

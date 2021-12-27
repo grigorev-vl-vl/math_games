@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import AnswerForm
+# from .forms import ProblemForm
 
 from .models import Problem, Contest, ProblemInclusion
 
@@ -89,8 +90,32 @@ def nice_cat(request):
     context = {}
     return HttpResponse(template.render(context, request))
 
+
 def example_template(request):
     template = loader.get_template('abacus/index.html')
     context = {}
+    return HttpResponse(template.render(context, request))
+
+
+def abacus_main_page(request, contest_id):
+    template = loader.get_template('abacus/abacus_main_page.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+    contest_problems_list = contest.problem.all
+    problem = Problem.objects.get(id=1)
+    print(problem.answer)
+    if request.method == 'POST':
+        answer_form = AnswerForm(request.POST)
+        if answer_form.is_valid():
+            print(problem.answer)
+            if answer_form.cleaned_data['your_answer'] == problem.answer:
+                return HttpResponse('meow')
+    else:
+        answer_form = AnswerForm()
+
+    context = {
+        'contest': contest,
+        'contest_problems_list': contest_problems_list,
+        'answer_form': answer_form,
+    }
     return HttpResponse(template.render(context, request))
 
