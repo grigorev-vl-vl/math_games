@@ -5,11 +5,48 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import AnswerForm
-# from .forms import ProblemForm
+
 
 from .models import Problem, Contest, ProblemInclusion
 
 
+def contest_screen(request, contest_id):
+    """(request, contest_id) -> list of all problem_text in contest """
+    template = loader.get_template('abacus/contest_screen.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+    themes = ProblemInclusion.objects.filter(contest=contest).values_list('theme', flat=True).distinct()
+    scores = ProblemInclusion.objects.filter(contest=contest).values_list('score', flat=True).distinct()
+
+    context = {
+        'contest': contest,
+        'themes': themes,
+        'scores': scores,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def answer_form(request, contest_id, problem_id):
+    template = loader.get_template('abacus/answer_form.html')
+    problem = get_object_or_404(Problem, pk=problem_id)
+    contest = get_object_or_404(Contest, pk=contest_id)
+    if request.method == 'POST':
+        answer_form = AnswerForm(request.POST)
+        if answer_form.is_valid():
+            # TODO send the answer to backend? Where do I check it?
+            if problem.check_answer(answer_form.cleaned_data['your_answer']):
+                return HttpResponse("Solved!")
+        # TODO what if form isn't valid
+    else:
+        answer_form = AnswerForm()
+
+    context = {
+        'problem': problem,
+        'answer_form': answer_form,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+"""
 def index(request):
     return HttpResponse("Hello, world. You're at the abacus index.")
 
@@ -31,15 +68,7 @@ def problem_details(request, problem_id):
     return HttpResponse(template.render(context, request))
 
 
-def context_problems(request, contest_id):
-    template = loader.get_template('abacus/contest_screen.html')
-    contest = get_object_or_404(Contest, pk=contest_id)
-    contest_problems_list = contest.problem.all
 
-    context = {
-        'contest_problems_list': contest_problems_list,
-    }
-    return HttpResponse(template.render(context, request))
 
 
 # TODO what's problem_id? Is it absolute id? Or the problem gets it's own id in contest
@@ -119,3 +148,8 @@ def abacus_main_page(request, contest_id):
     }
     return HttpResponse(template.render(context, request))
 
+def meow(request):
+    template = loader.get_template('abacus/base.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+"""

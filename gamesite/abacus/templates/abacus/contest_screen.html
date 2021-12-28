@@ -1,40 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  },
-  svg: {
-    fontCache: 'global'
-  }
-};
-</script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-</script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+{% extends "base.html" %}
 
-
-{% csrf_token %}
-
-<head>
-    <meta charset="UTF-8">
-    <title>Contest</title>
-</head>
-<body>
-When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-<h1>Meow</h1>
-$\int_0^\infty x^2 dx$
-An example of latex code: \(a \ne 5\)
-<h1>{{ contest.headline }}</h1>
-
-<ul>
-    {% for problem in contest_problems_list %}
-        <li>{{ problem.problem_text }}</li>
-    {% endfor %}
-</ul>
-
-</body>
-</html>
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Очки</th>
+                    {% for theme in themes %}
+                    <th> {{ theme }} </th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-success">Тыкать сюда</button>
+                    </td>
+                    <td>One</td>
+                    <td>Two</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Oneee</td>
+                    <td>Twooo</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <ol>
+      {% for problem in contest.problem.all %}
+          {% csrf_token %}
+          <li>{{ problem.problem_text }}</li>
+      {% endfor %}
+        </ol>
+</div>
+{% endblock main %}

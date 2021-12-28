@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+
+
+      <p>{{ problem.problem_text }}</p>
+        <form action="" method="post">
+
+            {% csrf_token %}
+            {{ answer_form }}
+            <input type="submit" value="Submit">
+        </form>
+
+</div>
+{% endblock main %}
+
