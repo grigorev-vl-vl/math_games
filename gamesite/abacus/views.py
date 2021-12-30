@@ -18,6 +18,7 @@ def contest_screen(request, contest_id):
     scores = ProblemInclusion.objects.filter(contest=contest).values_list('score', flat=True).distinct()
 
     context = {
+        'contest_id': contest_id,
         'contest': contest,
         'themes': themes,
         'scores': scores,
@@ -45,7 +46,27 @@ def answer_form(request, contest_id, problem_id):
     }
     return HttpResponse(template.render(context, request))
 
+"""
+def answer_problem_form(request, contest_id, theme, score):
+    template = loader.get_template('abacus/answer_form.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+    if request.method == 'POST':
+        answer_form = AnswerForm(request.POST)
+        if answer_form.is_valid():
+            # TODO send the answer to backend? Where do I check it?
+            if problem.check_answer(answer_form.cleaned_data['your_answer']):
+                return HttpResponse("Solved!")
+        # TODO what if form isn't valid
+    else:
+        answer_form = AnswerForm()
 
+    context = {
+        'problem': problem,
+        'answer_form': answer_form,
+    }
+    return HttpResponse(template.render(context, request))
+
+"""
 """
 def index(request):
     return HttpResponse("Hello, world. You're at the abacus index.")

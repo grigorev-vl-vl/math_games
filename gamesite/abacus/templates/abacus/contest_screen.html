@@ -14,18 +14,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% for score in scores %}
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-success">Тыкать сюда</button>
+                        {{ score }}
                     </td>
-                    <td>One</td>
-                    <td>Two</td>
+                    {% for theme in themes %}
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'abacus:answer_form' '1' '1' %}" role="button">Ссылка на задачу</a>
+                    </td>
+                    {% endfor %}
                 </tr>
-                <tr>
-                    <td>10</td>
-                    <td>Oneee</td>
-                    <td>Twooo</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
