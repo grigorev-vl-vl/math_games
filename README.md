@@ -17,4 +17,4 @@
 2) Create a new environment
 3) Make sure you installed all the required apps (requirements/prod.txt)
 4) Create .env file to connect to your databese (default is postgreSQL)
-5) Run with production settings (--settings==gamesite.settings.prod)
+5) Run with production settings (--settings=gamesite.settings.prod)
