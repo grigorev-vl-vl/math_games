@@ -25,6 +25,25 @@ def contest_screen(request, contest_id):
     }
     return HttpResponse(template.render(context, request))
 
+def team_screen(request, contest_id):
+    """ (request, contest_id) -> nice page of abaka"""
+    template = loader.get_template('abacus/team-1.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+
+    context = {
+
+    }
+    return HttpResponse(template.render(context, request))
+
+def results_screen(request, contest_id):
+    """ (request, contest_id) -> nice page of abaka"""
+    template = loader.get_template('abacus/results.html')
+    contest = get_object_or_404(Contest, pk=contest_id)
+
+    context = {
+
+    }
+    return HttpResponse(template.render(context, request))
 
 def answer_form(request, contest_id, problem_id):
     template = loader.get_template('abacus/answer_form.html')
