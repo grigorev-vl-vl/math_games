@@ -2,7 +2,11 @@
 let numberOfTeams;
 const teamNumber = document.querySelector("h1").getAttribute("id");
 iframe.onload = function () {
-    
+    // TODO python dict as json_script
+	const meow = JSON.parse(document.getElementById('hello-data').textContent);
+
+
+
     let k = 1; // team-1
     let tempResultsTable = iframe.contentDocument.querySelector("#team-" + k);
     while (tempResultsTable !== null) {
@@ -29,7 +33,7 @@ iframe.onload = function () {
 	    teamInputCell.setAttribute("class", resultsCellClass);
 	    
 	    if (resultsCellClass == "first-try") {
-		teamOutputCell.innerText = "Можно получить " + (coordX*10) + " баллов";
+		teamOutputCell.innerText = "Можно получить " + (coordX*10) + " баллов" + meow.innerText;
 		//console.log(teamInputCell.innerHTML);
 		teamInputCell.innerHTML = `<form>
 		Первая 

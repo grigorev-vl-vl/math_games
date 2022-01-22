@@ -30,8 +30,9 @@ def team_screen(request, contest_id):
     template = loader.get_template('abacus/team-1.html')
     contest = get_object_or_404(Contest, pk=contest_id)
 
+    meow = {'hello': 'world'}
     context = {
-
+        'meow': meow,
     }
     return HttpResponse(template.render(context, request))
 
