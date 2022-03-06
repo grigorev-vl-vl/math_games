@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views
+from abacus import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('abacus/', include(('abacus.urls'), namespace='abacus')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('abacus/', include('abacus.urls', namespace='abacus')),
+    path('abacus/contest/<int:contest_id>/results', views.results_screen, name='results_screen'),
 ]

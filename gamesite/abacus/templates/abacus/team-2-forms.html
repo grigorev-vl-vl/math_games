@@ -367,29 +367,22 @@
 	      </form>
 	    </td>
 	    <td id="cell5-4"  class="first-try">
-	      <form>
-		Первая 
-    		<br/>
-		попытка
-		<br/>
-		<INPUT type=text name="lengthNum" size=3>
-		<br/>
-		<BUTTON type=submit>
-		  Отправить
-		</BUTTON>
+	      <form id = "form5-4" method="post">
+                      {% csrf_token %}
+                Первая
+                    <br/>
+                попытка
+                <br/>
+                <INPUT type=text name="lengthNum" size=3 id="5-4">
+                <input type="hidden" id="postId" name="postId" value="34657">
+                <br/>
+                <BUTTON type=submit>
+                  Отправить
+                </BUTTON>
 	      </form>
 	    </td>
 	    <td id="cell5-5" class="first-try">
-	      <form method="post">
-		Первая
-    		<br/>
-		попытка
-		<br/>
-		<br/>
-		<BUTTON type=submit>
-		  Отправить
-		</BUTTON>
-	      </form>
+
 	    </td>
 	    <td id="cell5-6"></td>
 	  </tr>
@@ -590,7 +583,7 @@
     </div>
     <iframe src="{% static "abacus/static_results_for_test_only.html" %}" id="iframe"></iframe>
     
-{#    <script src="{%  static "abacus/scripts/scripts-for-teams-page.js" %}" ></script>#}
+    <script src="{%  static "abacus/scripts/scripts-for-teams-page.js" %}" ></script>
 
   </body>
 </html>

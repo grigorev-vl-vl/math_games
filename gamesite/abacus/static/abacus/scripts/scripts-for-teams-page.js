@@ -1,8 +1,25 @@
 //console.log("hwww");
 let numberOfTeams;
 const teamNumber = document.querySelector("h1").getAttribute("id");
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
 iframe.onload = function () {
-    
+
     let k = 1; // team-1
     let tempResultsTable = iframe.contentDocument.querySelector("#team-" + k);
     while (tempResultsTable !== null) {
@@ -10,7 +27,6 @@ iframe.onload = function () {
 	tempResultsTable = iframe.contentDocument.querySelector("#team-" + k);
     }
     numberOfTeams = k - 1;
-    
     for (let i = 1; i <= 5; i++) {
 	for (let j = 1; j <= 5; j++) {
 	    const coordX = j;
@@ -31,7 +47,7 @@ iframe.onload = function () {
 	    if (resultsCellClass == "first-try") {
 		teamOutputCell.innerText = "Можно получить " + (coordX*10) + " баллов";
 		//console.log(teamInputCell.innerHTML);
-		teamInputCell.innerHTML = `<form>
+		teamInputCell.innerHTML = `<form method="post">
 		Первая 
     		<br>
 		попытка
@@ -45,7 +61,9 @@ iframe.onload = function () {
 	    }
 	    if (resultsCellClass == "second-try") {
 		teamOutputCell.innerText = "Можно получить " + (coordX*5) + " баллов";
-		teamInputCell.innerHTML = `<form>
+		teamInputCell.innerHTML = `<form id="${i}${j}" 
+				method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
 		Вторая 
     		<br>
 		попытка

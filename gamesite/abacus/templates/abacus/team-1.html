@@ -319,6 +319,10 @@
     <!-- TODO import results from results.html, not static file -->
     <iframe src="{% static "abacus/static_results_for_test_only.html" %}" id="iframe"></iframe>
     
-    <script src="{%  static "abacus/scripts/scripts-for-teams-page.js" %}" ></script>
+{#    <script src="{%  static "abacus/scripts/scripts-for-teams-page.js" %}" ></script>#}
+  {% csrf_token %}
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
   </body>
 </html>
